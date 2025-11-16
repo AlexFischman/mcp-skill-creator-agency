@@ -88,7 +88,7 @@ Under the hood, the agent will:
   via the `PersistentShellTool`.
 - Initialize a new skill folder like:
 
-  - `mnt/skills/reporting-skill/reporting-skill/`
+  - `mnt/skills/reporting-skill/`
     - `SKILL.md`
     - `scripts/`
     - `references/`
