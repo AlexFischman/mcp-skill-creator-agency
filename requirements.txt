@@ -1,0 +1,2 @@
+agency-swarm[fastapi,jupyter]>=1.2.1
+psutil
