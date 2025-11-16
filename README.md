@@ -312,5 +312,3 @@ The `.cursor/rules/workflow.mdc` file contains the complete development specific
 ### 🛠️ **Development Route**
 
 Open this template in **Cursor IDE** and ask the AI to create your agency using the `.cursor` workflow. The AI will handle everything from setup to testing automatically!
-
-For manual development, replace the `ExampleAgency` with your own implementation and start deploying intelligent agent systems!
