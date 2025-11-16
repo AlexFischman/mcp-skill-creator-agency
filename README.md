@@ -53,6 +53,72 @@ If the backend is not detected, it prints instructions on how to start it and ex
 
 ---
 
+## 🧩 Using the SkillCreatorAgency to Build New Skills
+
+Once both the Claude Skills backend and the agency are running, you can use the terminal UI to create
+and iterate on skills.
+
+### 1. Inspect existing skills
+
+In the interactive terminal started by `python agency.py`, you can simply ask:
+
+- `What skills are available?`
+
+The `skill_creator` agent will:
+
+- Call `Claude_Skills.find_helpful_skills` to semantically search for relevant skills.
+- Call `Claude_Skills.list_skills` to show the full inventory, including:
+  - Skill names
+  - Short descriptions
+  - Source paths under `mnt/skills`.
+
+### 2. Create a new skill (e.g. reporting-skill)
+
+Example conversation:
+
+- You: `I want to create a new reporting skill.`
+- Agent:
+  - Uses the `skill-creator` skill to plan the new skill.
+  - Asks a short set of questions (name, description, data sources, outputs, delivery, etc.).
+  - You can answer in detail or say: `use defaults`.
+
+Under the hood, the agent will:
+
+- Run `python3 ./mnt/skills/skill-creator/scripts/init_skill.py <skill-name> --path ./mnt/skills/<folder>`
+  via the `PersistentShellTool`.
+- Initialize a new skill folder like:
+
+  - `mnt/skills/reporting-skill/reporting-skill/`
+    - `SKILL.md`
+    - `scripts/`
+    - `references/`
+    - `assets/`
+
+- Optionally overwrite `SKILL.md` and add starter scripts such as:
+
+  - `scripts/generate_report.py` – data in (CSV/SQLite), reports out (CSV/XLSX/PDF), optional email.
+
+### 3. Iterate on the new skill
+
+From there you can:
+
+- Ask the agent to:
+  - Open or modify `SKILL.md`.
+  - Edit or add scripts under `scripts/`.
+  - Add reference docs or assets.
+- Use the built-in validation and packaging scripts from the `skill-creator` skill:
+
+  ```bash
+  python3 ./mnt/skills/skill-creator/scripts/quick_validate.py ./mnt/skills/<folder>/<skill-name>
+  python3 ./mnt/skills/skill-creator/scripts/package_skill.py ./mnt/skills/<folder>/<skill-name> ./dist
+  ```
+
+This pattern works for any new skill you want to build (reporting, PDF processing, dashboards, etc.):
+you describe the skill conversationally, and the `skill_creator` agent orchestrates `init_skill.py`,
+file edits, validation, and packaging for you.
+
+---
+
 ## 🏗️ Project Structure
 
 ```
